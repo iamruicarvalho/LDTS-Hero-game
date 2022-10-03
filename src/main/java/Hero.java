@@ -6,6 +6,7 @@ import java.io.IOException;
 public class Hero {
     private int x;
     private int y;
+    private int ola;
     private Screen screen;
     public Hero(int x, int y) {
 
