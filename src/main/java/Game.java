@@ -6,40 +6,31 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
+import org.w3c.dom.ls.LSOutput;
 
 import java.io.IOException;
 public class Game {
-    Hero hero = new Hero(10, 10);
-    TerminalSize terminalSize = new TerminalSize(40, 20);
-    DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
-    Terminal terminal = terminalFactory.createTerminal();
-    Screen screen = new TerminalScreen(terminal);
+    private Arena arena;
+    private Screen screen;
+
     public Game() throws IOException {
+        arena = new Arena(40, 50);
+
+        TerminalSize terminalSize = new TerminalSize(40, 20);
+        DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
+        Terminal terminal = terminalFactory.createTerminal();
+        screen = new TerminalScreen(terminal);
+
         screen.setCursorPosition(null); // we don't need a cursor
         screen.startScreen();           // screens must be started
         screen.doResizeIfNecessary();   // resize screen if necessary
-
-        screen.clear();
-        screen.setCharacter(hero.getX(), hero.getY(), TextCharacter.fromCharacter('X')[0]);
-        screen.refresh();
     }
     private void draw() throws IOException {
-        screen.clear();
-        hero.draw(screen);
-        screen.refresh();
+        arena.draw(screen);
     }
-    private void moveHero(Position position) {
-        hero.setPosition(position);
-    }
+
     private void processKey(KeyStroke key) throws IOException {
-        System.out.println(key);
-        switch (key.getKeyType()) {
-            case ArrowUp    -> { moveHero(hero.moveUp()); break; }
-            case ArrowDown  -> { moveHero(hero.moveDown()); break; }
-            case ArrowRight -> { moveHero(hero.moveRight()); break; }
-            case ArrowLeft  -> { moveHero(hero.moveLeft()); break; }
-            default -> { break; }
-        }
+        arena.processKey(key);
     }
     public void run() throws IOException {
         while (true) {
