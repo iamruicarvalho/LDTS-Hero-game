@@ -5,6 +5,6 @@ public class Application {
         Game game = new Game();
         game.run();
 
-        Hero hero = new Hero(10, 10);
+        //Hero hero = new Hero(10, 10);
     }
 }
