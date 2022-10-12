@@ -10,11 +10,8 @@ public class Hero extends Element {
         super(x, y);
         position = new Position(x, y);
     }
-    public int getX() {
-        return position.getX();
-    }
-    public int getY() {
-        return position.getY();
+    public Position getPosition() {
+        return position;
     }
     public void setPosition(Position pos) {
         this.position = pos;
@@ -24,8 +21,8 @@ public class Hero extends Element {
     public Position moveRight() { return new Position(position.getX()+1, position.getY()); }
     public Position moveLeft()  { return new Position(position.getX()-1, position.getY()); }
     public void draw(TextGraphics graphics) {
-        graphics.setForegroundColor(TextColor.Factory.fromString("#FFFF33"));
+        graphics.setForegroundColor(TextColor.Factory.fromString("#001199"));
         graphics.enableModifiers(SGR.BOLD);
-        graphics.putString(new TerminalPosition(position.getX(), position.getY()), "X");
+        graphics.putString(new TerminalPosition(position.getX(), position.getY()), "*");
     }
 }
